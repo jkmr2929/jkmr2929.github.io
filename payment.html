@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Ømnex Tech</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img src="logo-icon.png" alt="Omnex Tech"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="projects.html">Project Updates</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us!</a></li>
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="cart.html">
+              🛒
+              <span id="cart-badge" class="cart-badge" style="display:none;">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="mb-4">Payment</h1>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="qr-container mb-4">
+            <h4>Scan to Pay</h4>
+            <img src="YOUR_QR_CODE_URL_HERE" alt="QR Code" class="my-4">
+            <p class="text-muted">Scan this QR code with any UPI app to complete payment</p>
+            <h3 class="product-price">₹ <span id="payment-total">0</span></h3>
+          </div>
+          
+          <form id="payment-form" onsubmit="submitPayment(event)">
+            <div class="mb-3">
+              <label class="form-label">Transaction ID / UTR Number *</label>
+              <input type="text" class="form-control" name="transactionId" required 
+                     placeholder="Enter UPI transaction ID">
+              <small class="text-muted">Enter the transaction ID from your UPI app after payment</small>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+          </form>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="cart-summary">
+            <h4>Order Details</h4>
+            <div id="order-items"></div>
+            
+            <h5 class="mt-4">Shipping Address</h5>
+            <div id="shipping-address"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5>Ømnex Tech</h5>
+          <p>Innovating for a better tomorrow, one product at a time.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Products</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Support</h5>
+          <ul class="list-unstyled">
+            <li><a href="terms.html">Terms and Conditions</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Ømnex Tech 25' - Powered by Innovation</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderOrderDetails() {
+      const cart = cartManager.getCart();
+      const address = checkoutManager.getAddress();
+      const subtotal = cartManager.getTotal();
+      const shippingCost = cartManager.getShippingCost(address?.country);
+      const grandTotal = cartManager.getGrandTotal(address?.country);
+      
+      // Display grand total
+      document.getElementById('payment-total').textContent = grandTotal.toLocaleString();
+      
+      // Display items
+      let itemsHtml = '';
+      cart.forEach(item => {
+        itemsHtml += `
+          <div class="d-flex justify-content-between py-2 border-bottom">
+            <span>${item.name} × ${item.quantity}</span>
+            <span>₹ ${(item.price * item.quantity).toLocaleString()}</span>
+          </div>
+        `;
+      });
+      itemsHtml += `
+        <div class="d-flex justify-content-between py-2 border-top">
+          <span>Subtotal:</span>
+          <span>₹ ${subtotal.toLocaleString()}</span>
+        </div>
+        <div class="d-flex justify-content-between py-2">
+          <span>Delivery + Packaging:</span>
+          <span>₹ ${shippingCost.toLocaleString()}</span>
+        </div>
+        <div class="alert alert-info py-2 px-3 mt-2 mb-3" style="font-size: 14px;">
+          <strong>📦 ${address?.country === 'India' ? 'India' : 'International'} Shipping:</strong> ₹${shippingCost}
+        </div>
+        <div class="d-flex justify-content-between py-3 border-top fw-bold" style="font-size: 20px; color: var(--primary-blue);">
+          <span>Grand Total:</span>
+          <span>₹ ${grandTotal.toLocaleString()}</span>
+        </div>
+      `;
+      document.getElementById('order-items').innerHTML = itemsHtml;
+      
+      // Display address
+      if (address) {
+        document.getElementById('shipping-address').innerHTML = `
+          <address class="mb-0">
+            ${address.name}<br>
+            ${address.address1}<br>
+            ${address.address2 ? address.address2 + '<br>' : ''}
+            ${address.city}, ${address.state} ${address.pin}<br>
+            ${address.country}<br>
+            Phone: ${address.phone}<br>
+            Email: ${address.email}
+          </address>
+        `;
+      }
+    }
+
+    async function submitPayment(event) {
+      event.preventDefault();
+      
+      const transactionId = event.target.transactionId.value;
+      const cart = cartManager.getCart();
+      const address = checkoutManager.getAddress();
+      
+      if (!address) {
+        alert('Shipping address not found. Please go back and enter your address.');
+        window.location.href = 'address.html';
+        return;
+      }
+      
+      const orderData = orderManager.prepareOrder(cart, address, transactionId);
+      
+      try {
+        // Show loading state
+        event.target.querySelector('button').disabled = true;
+        event.target.querySelector('button').textContent = 'Processing...';
+        
+        // Submit order to Pipedream
+        await orderManager.submitOrder(orderData);
+        
+        // Store order details for thank you page
+        localStorage.setItem('lastOrderId', orderData.orderId);
+        localStorage.setItem('lastOrderTotal', orderData.total);
+        
+        // Clear cart
+        cartManager.clearCart();
+        
+        // Redirect to thank you page
+        window.location.href = `thank-you.html?orderId=${orderData.orderId}&total=${orderData.total}`;
+      } catch (error) {
+        console.error('Order submission failed:', error);
+        
+        // Check if it's a webhook configuration issue
+        if (orderManager.webhookUrl.includes('YOUR_PIPEDREAM') || orderManager.webhookUrl.includes('eodlt3r0cgbzqnl')) {
+          alert('⚠️ DEMO MODE: Webhook not configured yet!\n\nYour order details have been saved locally:\n\n' +
+                'Order ID: ' + orderData.orderId + '\n' +
+                'Transaction ID: ' + transactionId + '\n' +
+                'Total: ₹' + orderData.total + '\n\n' +
+                'To enable real order submission:\n' +
+                '1. Go to https://pipedream.com\n' +
+                '2. Create a webhook\n' +
+                '3. Replace the URL in js/app.js\n\n' +
+                'Redirecting to confirmation page...');
+          
+          // Store order for demo purposes
+          localStorage.setItem('lastOrderId', orderData.orderId);
+          localStorage.setItem('lastOrderTotal', orderData.total);
+          localStorage.setItem('demoOrder', JSON.stringify(orderData));
+          
+          // Clear cart and redirect anyway in demo mode
+          cartManager.clearCart();
+          window.location.href = `thank-you.html?orderId=${orderData.orderId}&total=${orderData.total}`;
+        } else {
+          alert('There was an error submitting your order. Please try again or contact us with your transaction ID: ' + transactionId);
+          event.target.querySelector('button').disabled = false;
+          event.target.querySelector('button').textContent = 'Submit Order';
+        }
+      }
+    }
+
+    renderOrderDetails();
+  </script>
+</body>
+</html>

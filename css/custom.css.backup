@@ -1,0 +1,313 @@
+/* Custom Omnex Tech Styles - Futuristic Black & White Design */
+/* Colors: Black, White only - Minimal, Modern, Futuristic */
+
+:root {
+  --black: #000000;
+  --dark-gray: #1a1a1a;
+  --mid-gray: #2a2a2a;
+  --text-gray: #808080;
+  --border-gray: #333333;
+  --white: #ffffff;
+  --bg-light: #0a0a0a;
+  --accent-glow: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  color: var(--white);
+  background: var(--black);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Header Styling */
+.navbar {
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.navbar-brand img {
+  height: 40px;
+}
+
+.nav-link {
+  color: #212529 !important;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 8px 12px !important;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--primary-blue) !important;
+  background: rgba(69,170,218,0.1);
+  border-radius: 4px;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../hero-bg.jpg') center/cover;
+  color: white;
+  padding: 120px 20px;
+  text-align: center;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section h1 {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.hero-section p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  font-weight: 300;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  padding: 12px 32px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--primary-blue-dark);
+  border-color: var(--primary-blue-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(69,170,218,0.3);
+}
+
+/* Sections */
+.section {
+  padding: 80px 20px;
+}
+
+.section h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: var(--text-gray);
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+/* Black Section */
+.bg-black {
+  background: var(--black);
+  color: white;
+}
+
+/* Parallax Section */
+.parallax-section {
+  background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('../parallax-bg.jpg') center/cover fixed;
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.parallax-section h2 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Product Cards */
+.product-card {
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s;
+  background: white;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(69,170,218,0.2);
+  border-color: var(--primary-blue);
+}
+
+.product-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.product-card .card-body {
+  padding: 20px;
+}
+
+.product-card .card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.product-price {
+  font-size: 24px;
+  color: var(--primary-blue);
+  font-weight: 700;
+  margin: 12px 0;
+}
+
+/* Cart */
+.cart-item {
+  border-bottom: 1px solid var(--border-gray);
+  padding: 20px 0;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.cart-summary {
+  background: var(--bg-light);
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border-gray);
+}
+
+/* Footer */
+footer {
+  background: var(--black);
+  color: #adb5bd;
+  padding: 60px 20px 20px;
+  margin-top: 80px;
+}
+
+footer h5 {
+  color: var(--primary-blue);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+footer a {
+  color: #adb5bd;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: var(--primary-blue);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 30px;
+  margin-top: 40px;
+  text-align: center;
+  color: var(--text-gray);
+  font-size: 13px;
+}
+
+/* Cart Badge */
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: var(--primary-blue);
+  color: white;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+}
+
+/* Forms */
+.form-control:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(69,170,218,0.25);
+}
+
+/* QR Payment */
+.qr-container {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid var(--border-gray);
+}
+
+.qr-container img {
+  max-width: 300px;
+  border: 2px solid var(--border-gray);
+  border-radius: 8px;
+}
+
+/* Notification Toast */
+.toast-notification {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: white;
+  color: #212529;
+  padding: 16px 24px;
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border-left: 4px solid var(--primary-blue);
+  z-index: 9999;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 36px;
+  }
+  
+  .section {
+    padding: 60px 20px;
+  }
+  
+  .section h2 {
+    font-size: 28px;
+  }
+}

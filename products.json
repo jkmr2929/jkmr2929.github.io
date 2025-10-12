@@ -1,0 +1,37 @@
+{
+  "products": [
+    {
+      "id": "multi-purpose-cable-adapter",
+      "name": "Multi-purpose cable adapter set box",
+      "price": 249,
+      "currency": "₹",
+      "image": "product1.jpg",
+      "description": "This Multi-purpose cable adapter set will have everything you need for transferring data and charging through cables of different ports.",
+      "features": [
+        "Type-c to USB 2.0 adapter",
+        "Type-c to MicroUSB adapter",
+        "Type-c to lightning adapter",
+        "Ejection pin storage",
+        "Multiple sim/SD storage",
+        "Built-in Phone stand functionality"
+      ],
+      "terms": "NON-RETURNABLE. Refundable only in case of severe damage. Shipping time: will be given upon order or inquiry. Shipping cost: will be given upon order or inquiry."
+    },
+    {
+      "id": "modular-power-hub",
+      "name": "Modular Power Hub 9000mAh",
+      "price": 1299,
+      "currency": "₹",
+      "image": "product2.jpg",
+      "description": "Ultra-modular Power Hub with 9000mAh capacity for all your charging needs.",
+      "features": [
+        "9000mAh battery capacity",
+        "Modular design",
+        "Multiple charging ports",
+        "Fast charging support",
+        "Compact and portable"
+      ],
+      "terms": "NON-RETURNABLE. Refundable only in case of severe damage. Shipping time: will be given upon order or inquiry. Shipping cost: will be given upon order or inquiry."
+    }
+  ]
+}

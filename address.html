@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipping Address - Ømnex Tech</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img src="logo-icon.png" alt="Omnex Tech"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="shop.html">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="projects.html">Project Updates</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us!</a></li>
+          <li class="nav-item">
+            <a class="nav-link position-relative" href="cart.html">
+              🛒
+              <span id="cart-badge" class="cart-badge" style="display:none;">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="mb-4">Shipping Address</h1>
+      <div class="row">
+        <div class="col-lg-6">
+          <form id="address-form" onsubmit="submitAddress(event)">
+            <div class="mb-3">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email *</label>
+              <input type="email" class="form-control" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone *</label>
+              <input type="tel" class="form-control" name="phone" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Address Line 1 *</label>
+              <input type="text" class="form-control" name="address1" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Address Line 2</label>
+              <input type="text" class="form-control" name="address2">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">City *</label>
+                <input type="text" class="form-control" name="city" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">State *</label>
+                <input type="text" class="form-control" name="state" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">PIN Code *</label>
+                <input type="text" class="form-control" name="pin" pattern="[0-9]{6}" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Country *</label>
+                <input type="text" class="form-control" name="country" value="India" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Proceed to Payment</button>
+          </form>
+        </div>
+        <div class="col-lg-6">
+          <div class="cart-summary">
+            <h4>Order Summary</h4>
+            <div id="order-summary"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5>Ømnex Tech</h5>
+          <p>Innovating for a better tomorrow, one product at a time.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Products</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Support</h5>
+          <ul class="list-unstyled">
+            <li><a href="terms.html">Terms and Conditions</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Ømnex Tech 25' - Powered by Innovation</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function renderOrderSummary() {
+      const cart = cartManager.getCart();
+      const country = document.querySelector('[name="country"]')?.value || 'India';
+      const shippingCost = cartManager.getShippingCost(country);
+      const grandTotal = cartManager.getGrandTotal(country);
+      
+      let html = '';
+      cart.forEach(item => {
+        html += `
+          <div class="d-flex justify-content-between py-2">
+            <span>${item.name} × ${item.quantity}</span>
+            <span>₹ ${(item.price * item.quantity).toLocaleString()}</span>
+          </div>
+        `;
+      });
+      html += `
+        <div class="d-flex justify-content-between py-2 border-top">
+          <span>Subtotal:</span>
+          <span>₹ ${cartManager.getTotal().toLocaleString()}</span>
+        </div>
+        <div class="d-flex justify-content-between py-2">
+          <span>Delivery + Packaging:</span>
+          <span>₹ ${shippingCost.toLocaleString()}</span>
+        </div>
+        <div class="alert alert-info py-2 px-3 mt-2" style="font-size: 14px;">
+          <strong>📦 Shipping:</strong> ₹100 for India | ₹500 International
+        </div>
+        <div class="d-flex justify-content-between py-3 border-top fw-bold" style="font-size: 20px; color: var(--primary-blue);">
+          <span>Grand Total:</span>
+          <span>₹ ${grandTotal.toLocaleString()}</span>
+        </div>
+      `;
+      document.getElementById('order-summary').innerHTML = html;
+    }
+    
+    // Update summary when country changes
+    document.querySelector('[name="country"]')?.addEventListener('change', renderOrderSummary);
+
+    function submitAddress(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const address = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        address1: formData.get('address1'),
+        address2: formData.get('address2'),
+        city: formData.get('city'),
+        state: formData.get('state'),
+        pin: formData.get('pin'),
+        country: formData.get('country')
+      };
+      checkoutManager.saveAddress(address);
+      window.location.href = 'payment.html';
+    }
+
+    // Pre-fill if address exists
+    const savedAddress = checkoutManager.getAddress();
+    if (savedAddress) {
+      Object.keys(savedAddress).forEach(key => {
+        const input = document.querySelector(`[name="${key}"]`);
+        if (input) input.value = savedAddress[key];
+      });
+    }
+
+    renderOrderSummary();
+  </script>
+</body>
+</html>
