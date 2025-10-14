@@ -112,7 +112,7 @@ class OrderManager {
   constructor() {
     // Replace this with your actual Pipedream webhook URL
     // Get it from: https://pipedream.com
-    this.webhookUrl = 'https://eov3vu6el42x9h1.m.pipedream.net'; // REPLACE WITH YOUR WEBHOOK URLlllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
+    this.webhookUrl = 'https://eov3vu6el42x9h1.m.pipedream.net'; // REPLACE WITH YOUR WEBHOOK URL
   }
 
   prepareOrder(cart, address, transactionId) {
@@ -164,11 +164,19 @@ class OrderManager {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
       
-      // Pipedream might return empty response, which is OK
+      // Pipedream might return empty response or HTML, which is OK if status 200
       const responseText = await response.text();
-      if (responseText) {
-        return JSON.parse(responseText);
+      console.log('Response received:', responseText);
+      
+      // Try to parse as JSON, but if it fails and we got 200, that's still success
+      try {
+        if (responseText && responseText.trim().startsWith('{')) {
+          return JSON.parse(responseText);
+        }
+      } catch (parseError) {
+        console.log('Response was not JSON, but request succeeded');
       }
+      
       return { success: true };
       
     } catch (error) {
@@ -190,4 +198,3 @@ const orderManager = new OrderManager();
 document.addEventListener('DOMContentLoaded', () => {
   cartManager.updateCartBadge();
 });
-
