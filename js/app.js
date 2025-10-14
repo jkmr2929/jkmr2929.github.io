@@ -144,28 +144,37 @@ class OrderManager {
 
   async submitOrder(orderData) {
     try {
-      // Check if webhook URL is configured
-      if (this.webhookUrl.includes('YOUR_PIPEDREAM') || this.webhookUrl.includes('pipedream.net')) {
-        console.warn('⚠️ Using demo webhook URL. Replace with your actual Pipedream webhook in js/app.js');
-      }
+      console.log('Submitting order to:', this.webhookUrl);
+      console.log('Order data:', orderData);
       
       const response = await fetch(this.webhookUrl, {
         method: 'POST',
+        mode: 'cors',
         headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(orderData)
       });
       
+      console.log('Response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
       
-      return await response.json();
+      // Pipedream might return empty response, which is OK
+      const responseText = await response.text();
+      if (responseText) {
+        return JSON.parse(responseText);
+      }
+      return { success: true };
+      
     } catch (error) {
       console.error('Order submission error:', error);
-      console.log('Order data that was attempted to send:', orderData);
+      console.log('Webhook URL:', this.webhookUrl);
+      console.log('Order data that failed:', orderData);
       throw error;
     }
   }
@@ -181,4 +190,3 @@ const orderManager = new OrderManager();
 document.addEventListener('DOMContentLoaded', () => {
   cartManager.updateCartBadge();
 });
-
