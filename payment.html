@@ -189,32 +189,18 @@
         window.location.href = `thank-you.html?orderId=${orderData.orderId}&total=${orderData.total}`;
       } catch (error) {
         console.error('Order submission failed:', error);
+        console.log('Failed order data:', orderData);
         
-        // Check if it's a webhook configuration issue
-        if (orderManager.webhookUrl.includes('YOUR_PIPEDREAM') || orderManager.webhookUrl.includes('eodlt3r0cgbzqnl')) {
-          alert('⚠️ DEMO MODE: Webhook not configured yet!\n\nYour order details have been saved locally:\n\n' +
-                'Order ID: ' + orderData.orderId + '\n' +
-                'Transaction ID: ' + transactionId + '\n' +
-                'Total: ₹' + orderData.total + '\n\n' +
-                'To enable real order submission:\n' +
-                '1. Go to https://pipedream.com\n' +
-                '2. Create a webhook\n' +
-                '3. Replace the URL in js/app.js\n\n' +
-                'Redirecting to confirmation page...');
-          
-          // Store order for demo purposes
-          localStorage.setItem('lastOrderId', orderData.orderId);
-          localStorage.setItem('lastOrderTotal', orderData.total);
-          localStorage.setItem('demoOrder', JSON.stringify(orderData));
-          
-          // Clear cart and redirect anyway in demo mode
-          cartManager.clearCart();
-          window.location.href = `thank-you.html?orderId=${orderData.orderId}&total=${orderData.total}`;
-        } else {
-          alert('There was an error submitting your order. Please try again or contact us with your transaction ID: ' + transactionId);
-          event.target.querySelector('button').disabled = false;
-          event.target.querySelector('button').textContent = 'Submit Order';
-        }
+        alert('There was an error submitting your order.\n\n' +
+              'Your order details:\n' +
+              'Order ID: ' + orderData.orderId + '\n' +
+              'Transaction ID: ' + transactionId + '\n' +
+              'Total: ₹' + orderData.total + '\n\n' +
+              'Please contact us with your transaction ID and we will process your order manually.\n\n' +
+              'Error: ' + error.message);
+        
+        event.target.querySelector('button').disabled = false;
+        event.target.querySelector('button').textContent = 'Submit Order';
       }
     }
 
