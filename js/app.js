@@ -112,7 +112,7 @@ class OrderManager {
   constructor() {
     // Replace this with your actual Pipedream webhook URL
     // Get it from: https://pipedream.com
-    this.webhookUrl = 'https://eodlt3r0cgbzqnl.m.pipedream.net'; // REPLACE WITH YOUR WEBHOOK URL
+    this.webhookUrl = 'https://eov3vu6el42x9h1.m.pipedream.net'; // REPLACE WITH YOUR WEBHOOK URL
   }
 
   prepareOrder(cart, address, transactionId) {
@@ -181,3 +181,4 @@ const orderManager = new OrderManager();
 document.addEventListener('DOMContentLoaded', () => {
   cartManager.updateCartBadge();
 });
+
