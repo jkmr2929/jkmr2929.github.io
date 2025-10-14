@@ -164,18 +164,10 @@ class OrderManager {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
       
-      // Pipedream might return empty response or HTML, which is OK if status 200
+      // Success! Pipedream returns HTML by default, which is fine
       const responseText = await response.text();
-      console.log('Response received:', responseText);
-      
-      // Try to parse as JSON, but if it fails and we got 200, that's still success
-      try {
-        if (responseText && responseText.trim().startsWith('{')) {
-          return JSON.parse(responseText);
-        }
-      } catch (parseError) {
-        console.log('Response was not JSON, but request succeeded');
-      }
+      console.log('✅ Order submitted successfully!');
+      console.log('Response preview:', responseText.substring(0, 100));
       
       return { success: true };
       
